@@ -54,13 +54,16 @@ module.exports = {
   servedPath: getServedPath(resolveApp('package.json')),
   alias: {
     'react-native': 'react-native-web',
+    src: resolveApp('src'),
     components: resolveApp('src/components'),
     containers: resolveApp('src/containers'),
     actions: resolveApp('src/redux/actions'),
-    constants: resolveApp('src/constants'),
     reducers: resolveApp('src/redux/reducers'),
     selectors: resolveApp('src/redux/selectors'),
+    constants: resolveApp('src/constants'),
     api: resolveApp('src/api'),
     svg: resolveApp('src/svg'),
+    utils: resolveApp('src/utils'),
+    forms: resolveApp('src/forms'),
   }
 };

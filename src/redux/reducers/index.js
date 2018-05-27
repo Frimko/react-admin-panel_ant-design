@@ -1,10 +1,11 @@
-import { combineReducers } from 'redux'
-import customers from './customers'
-import mainReducer from './mainReducer'
+import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 
-const reducers = combineReducers({
-    customers: customers,
-    main: mainReducer,
+import customers from './customers';
+import main from './main';
+
+export default combineReducers({
+  customers,
+  main,
+  form: formReducer,
 });
-
-export default reducers

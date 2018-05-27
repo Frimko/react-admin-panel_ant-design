@@ -1,22 +1,22 @@
 import React from 'react';
 import { Menu as AntMenu, Icon } from 'antd';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 
 const Menu = () => {
   const selected = !!window && window.location ? window.location.pathname : 'customers';
 
   const menuItems = [
     {
-      link: '/customers',
+      link: '/customers/',
       name: 'Customer',
-      icon: 'file-text'
+      icon: 'file-text',
     },
     {
-      link: '/products',
+      link: '/products/',
       name: 'Products',
-      icon: 'file-text'
+      icon: 'file-text',
     },
-  ]
+  ];
   return (
     <AntMenu theme="dark" mode="inline" defaultSelectedKeys={[selected]}>
       {
@@ -30,6 +30,7 @@ const Menu = () => {
         ))
       }
     </AntMenu>
-  )
-}
-export default Menu
+  );
+};
+
+export default Menu;

@@ -1,17 +1,22 @@
 import React from 'react';
-import Header from 'components/Header'
-import Loader from 'containers/Loader'
+import PropTypes from 'prop-types';
+import Header from 'components/Header';
+import Loader from 'containers/Loader';
 
 const Main = (props) => {
-    return (
-        <div>
-            <Header/>
-            <div className="container">
-                {props.children}
-            </div>
-            <Loader/>
-        </div>
-    )
+  return (
+    <div>
+      <Header/>
+      <div className="container">
+        {props.children}
+      </div>
+      <Loader/>
+    </div>
+  )
 };
 
-export default Main
+Main.propTypes = {
+  children: PropTypes.any.isRequired,
+};
+export default Main;
+

@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { Layout, BackTop } from 'antd';
-import { Logo, Trigger } from './styled';
+import { Layout as AntLayout, BackTop } from 'antd';
+import PropTypes from 'prop-types';
 import logoSvg from 'svg/logo.svg';
 import Header from 'components/Header';
 import Menu from 'components/Menu';
+import Styleds from 'src/configStyleds';
+import { Logo, Trigger } from './styled';
 
-class SiderDemo extends Component {
+class Layout extends Component {
   state = {
     collapsed: false,
   };
+
   toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed,
@@ -16,31 +19,35 @@ class SiderDemo extends Component {
   }
 
   render() {
-    const {children} = this.props;
     const trigger = (
       <Trigger
         type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
         onClick={this.toggle}
       />
-    )
+    );
     return (
-      <Layout>
-        <Layout.Sider
+      <AntLayout>
+        <AntLayout.Sider
           trigger={null}
           collapsible
           collapsed={this.state.collapsed}
+          width={Styleds.siderWidth}
         >
           <Logo img={logoSvg} height={96}/>
           <Menu/>
-        </Layout.Sider>
-        <Layout style={{height: '100vh', overflow: 'scroll'}} id="mainContainer">
+        </AntLayout.Sider>
+        <AntLayout style={{ height: '100vh', overflow: 'hidden' }} id="mainContainer">
           <BackTop target={() => document.getElementById('mainContainer')}/>
           <Header trigger={trigger}/>
-          {children}
-        </Layout>
-      </Layout>
+          {this.props.children}
+        </AntLayout>
+      </AntLayout>
     );
   }
 }
 
-export default SiderDemo
+Layout.propTypes = {
+  children: PropTypes.node,
+};
+
+export default Layout;

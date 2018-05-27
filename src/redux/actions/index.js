@@ -4,23 +4,22 @@
  */
 import api from 'api/index';
 import {
-    CUSTOMERS_FETCH_REQUEST_SUCCESS,
-    PRODUCTS_FETCH_REQUEST_SUCCESS,
-    FETCH_REQUEST_FAILURE,
+  CUSTOMERS_FETCH_REQUEST_SUCCESS,
+  PRODUCTS_FETCH_REQUEST_SUCCESS,
+  FETCH_REQUEST_FAILURE,
 
-    SHOW_LOADER,
-    HIDE_LOADER,
+  SHOW_LOADER,
+  HIDE_LOADER,
 
-    SHOW_CUSTOMERS_MODAL,
-    HIDE_CUSTOMERS_MODAL,
+  SHOW_CUSTOMERS_MODAL,
+  HIDE_CUSTOMERS_MODAL,
 
-    SHOW_PRODUCTS_MODAL,
-    HIDE_PRODUCTS_MODAL,
-} from 'constants/index'
+  SHOW_PRODUCTS_MODAL,
+  HIDE_PRODUCTS_MODAL,
+} from 'constants/index';
 
-export const showSpinner = {type: SHOW_LOADER}
-export const hideSpinner = {type: HIDE_LOADER}
-
+export const showSpinner = { type: SHOW_LOADER };
+export const hideSpinner = { type: HIDE_LOADER };
 
 
 /*

@@ -99,7 +99,7 @@ sequelize.sync()
       phone: "666"
     });
 
-    for (let i = 0; i <= 40; i++) {
+    for (let i = 0; i <= 300; i++) {
       Customer.create({
         name: "batman" + i,
         address: Math.random() * 1000,
@@ -147,15 +147,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.route('/api/customers')
   .get(function (req, res) {
-    Customer.count().then((count) => {
-      let limit = 5;
-      Customer.findAll({offset: (+req.query.page + limit), limit: limit}).then(function (customers) {
-        res.json({
-          items: customers,
-          pages: Math.ceil(count/limit)
-        });
-      })
-    });
+    setTimeout(()=>{
+      Customer.count().then((count) => {
+        let limit = 30;
+        Customer.findAll({offset: (req.query.page * limit), limit: limit}).then(function (customers) {
+          res.json({
+            items: customers,
+            pages: Math.ceil(count/limit)
+          });
+        })
+      });
+    }, 1000)
   })
   .post(function (req, res) {
     var customer = Customer.build(_.pick(req.body, ['name', 'address', 'phone']));

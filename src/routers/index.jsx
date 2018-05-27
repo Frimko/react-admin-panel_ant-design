@@ -8,30 +8,31 @@ const Routers = (props) => {
   const routes = [
     {
       path: '/',
+      exact: true,
       component: Customers,
     },
     {
-      path: '/customers',
+      path: '/customers/',
       component: Customers,
     },
     {
       path: '/products',
       component: Products,
     },
-  ]
+  ];
   return (
     <BrowserRouter>
       <Layout>
         <Switch>
           {
-            routes.map(({path, component}, key) => (
-              <Route key={key} exact path={path} component={component}/>
+            routes.map(({ path, component, exact }) => (
+              <Route key={path} exact={!!exact} path={path} component={component}/>
             ))
           }
         </Switch>
       </Layout>
     </BrowserRouter>
-  )
+  );
 };
 
 export default Routers;
