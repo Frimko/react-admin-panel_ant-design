@@ -1,10 +1,13 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { fetch } from 'actions/customers';
+import { Alert } from 'antd';
+import { fetch, editItem, addItem, deleteItem } from 'actions/customers';
 import Page from 'components/Page';
 import Table from 'components/Table';
 import CustomersForm from 'forms/CustomersForm';
-import { items, pagesCount } from 'selectors/customers';
+import { items, pagesCount, getError, customersItemsSelector } from 'selectors/customers';
+
+/* eslint react/prop-types: 0 */
 
 class Customers extends PureComponent {
 
@@ -31,7 +34,12 @@ class Customers extends PureComponent {
   }
 
 
-  mount = () => this.props.fetch(0)
+  componentWillMount() {
+    const { curPageTable, items } = this.props;
+    if (!items.length || curPageTable > 0) {
+      this.props.fetch(0);
+    }
+  }
 
   getEditPageComponent = (props) => (
     <CustomersForm {...props}/>
@@ -40,21 +48,20 @@ class Customers extends PureComponent {
   onChangePage = (page) => this.props.fetch(--page)
 
   render() {
-    const { pageCount, items } = this.props;
+    const { pageCount, items, editItem, addItem, deleteItem, errorText } = this.props;
     return (
       <Page title="Customer">
+        {errorText && (<Alert message={errorText} type="error" showIcon closable/>)}
         <Table
-          showModal
           items={items}
-          columns={this.columns}
           pageCount={pageCount}
+          columns={this.columns}
           pageName='customers'
-          onMount={this.mount}
           onChangePage={this.onChangePage}
           editPageComponent={this.getEditPageComponent}
-          createPage={this.onChangePage}
-          onDelete={this.onChangePage}
-          onEdit={console.log}
+          onAdd={addItem}
+          onEdit={editItem}
+          onDelete={deleteItem}
         />
       </Page>
     );
@@ -65,12 +72,16 @@ const mapStateToProps = (state) => {
   return {
     items: items(state),
     pageCount: pagesCount(state),
+    errorText: getError(state),
+    curPageTable: customersItemsSelector(state).curPage,
   };
 };
 const mapDispatchToProps = (dispatch) => {
-  const tableName = 'customers';
   return {
-    fetch: (page) => dispatch(fetch(tableName, page)),
+    fetch: (page) => dispatch(fetch(page)),
+    addItem: (data) => dispatch(addItem(data)),
+    editItem: (data) => dispatch(editItem(data.id, data)),
+    deleteItem: (id) => dispatch(deleteItem(id)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Customers);

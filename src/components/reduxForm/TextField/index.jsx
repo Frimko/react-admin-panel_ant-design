@@ -41,7 +41,7 @@ TextField.propTypes = {
   input: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  type: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
   meta: PropTypes.object.isRequired,
 };
 

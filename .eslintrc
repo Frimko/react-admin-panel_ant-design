@@ -27,6 +27,7 @@
   },
   "rules": {
     "import/named": 2,
+    "react/prop-types": 1,
     "import/namespace": 2,
     "import/default": 2,
     "import/export": 2,
@@ -42,24 +43,19 @@
     ],
     "react/sort-comp": "off",
     "react/jsx-indent": [
-      "error",
+      1,
       2
     ],
     "react/prefer-stateless-function": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-indent-props": "off",
     "react/forbid-prop-types": [
-      2,
+      1,
       {
         "forbid": []
       }
     ],
-    "react/no-unused-prop-types": [
-      2,
-      {
-        "skipShapeProps": true
-      }
-    ],
+    "react/no-unused-prop-types": 0,
     "brace-style": [
       2,
       "1tbs"
@@ -138,7 +134,7 @@
     "no-redeclare": 2,
     "no-script-url": 2,
     "no-sequences": 2,
-    "no-shadow": 2,
+    "no-shadow": 0,
     "no-shadow-restricted-names": 2,
     "no-spaced-func": 2,
     "no-trailing-spaces": 2,
@@ -176,7 +172,7 @@
       }
     ],
     "spaced-comment": [
-      2,
+      1,
       "always",
       {
         "exceptions": [
@@ -269,12 +265,7 @@
         "named": "never"
       }
     ],
-    "no-param-reassign": [
-      "error",
-      {
-        "props": false
-      }
-    ],
+    "no-param-reassign": 0,
     "radix": [
       "error",
       "as-needed"
@@ -296,12 +287,7 @@
     "class-methods-use-this": [
       0
     ],
-    "no-plusplus": [
-      "error",
-      {
-        "allowForLoopAfterthoughts": true
-      }
-    ],
+    "no-plusplus": 0,
     "no-confusing-arrow": "off",
     "new-cap": [
       2,

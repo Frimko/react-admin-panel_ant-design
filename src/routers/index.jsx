@@ -1,10 +1,13 @@
 import React from 'react';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router';
+import createHistory from 'history/createBrowserHistory';
+import { ConnectedRouter } from 'react-router-redux';
 import Layout from 'components/Layout';
 import Customers from 'containers/Customers';
 import Products from 'containers/Products';
 
-const Routers = (props) => {
+const history = createHistory();
+const Routers = () => {
   const routes = [
     {
       path: '/',
@@ -21,7 +24,7 @@ const Routers = (props) => {
     },
   ];
   return (
-    <BrowserRouter>
+    <ConnectedRouter history={history}>
       <Layout>
         <Switch>
           {
@@ -31,7 +34,7 @@ const Routers = (props) => {
           }
         </Switch>
       </Layout>
-    </BrowserRouter>
+    </ConnectedRouter>
   );
 };
 

@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button as AntButton, Form } from 'antd';
 
-const Button = ({ key, buttonProps, formItemProps, text, inModalFooter }) => {
+const Button = ({ keyForm, buttonProps, formItemProps, text, inModalFooter }) => {
   if (inModalFooter) {
     return (
       <AntButton
-        key={key}
+        key={keyForm}
         {...buttonProps}
       >
         {text}
@@ -15,7 +15,7 @@ const Button = ({ key, buttonProps, formItemProps, text, inModalFooter }) => {
   }
   return (
     <Form.Item
-      key={key}
+      key={keyForm}
       {...formItemProps}
     >
       <AntButton {...buttonProps}>
@@ -29,10 +29,10 @@ Button.propTypes = {
   buttonProps: PropTypes.object,
   formItemProps: PropTypes.object,
   inModalFooter: PropTypes.bool,
-  key: PropTypes.oneOfType([
+  keyForm: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-  ]).isRequired,
+  ]),
   text: PropTypes.string.isRequired,
 };
 

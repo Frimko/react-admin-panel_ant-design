@@ -5,14 +5,33 @@
 
 import { createSelector } from 'reselect';
 
-const customersItemsSelector = state => state.customers;
+export const customersItemsSelector = state => state.customers.table;
+
+export const getError = createSelector(
+  customersItemsSelector,
+  (table) => {
+    return table.errorText;
+  }
+);
+export const byId = createSelector(
+  customersItemsSelector,
+  (table) => {
+    return table.items.byId;
+  }
+);
+
+export const ids = createSelector(
+  customersItemsSelector,
+  (table) => {
+    return table.items.ids;
+  }
+);
 
 export const items = createSelector(
-  customersItemsSelector,
-  (customers) => {
-    console.log('customers', customers);
-    console.log('customers.items', customers.items);
-    return customers.items.ids.map(id => customers.items.byId[id]);
+  ids,
+  byId,
+  (ids, byId) => {
+    return ids.map(id => byId[id]);
   }
 );
 

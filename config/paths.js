@@ -60,6 +60,7 @@ module.exports = {
     actions: resolveApp('src/redux/actions'),
     reducers: resolveApp('src/redux/reducers'),
     selectors: resolveApp('src/redux/selectors'),
+    store: resolveApp('src/redux/store'),
     constants: resolveApp('src/constants'),
     api: resolveApp('src/api'),
     svg: resolveApp('src/svg'),

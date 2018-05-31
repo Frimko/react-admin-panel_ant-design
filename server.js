@@ -143,48 +143,63 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+const timer = (cb)=>{
+  setTimeout(()=>{
+    cb();
+  }, 1000);
+}
 // CUSTOMERS API
 
 app.route('/api/customers')
   .get(function (req, res) {
-    setTimeout(()=>{
-      Customer.count().then((count) => {
-        let limit = 30;
-        Customer.findAll({offset: (req.query.page * limit), limit: limit}).then(function (customers) {
-          res.json({
-            items: customers,
-            pages: Math.ceil(count/limit)
-          });
+    timer(()=>{
+        Customer.count().then((count) => {
+          let limit = 30;
+          Customer.findAll({offset: (req.query.page * limit), limit: limit}).then(function (customers) {
+            res.json({
+              items: customers,
+              pages: Math.ceil(count/limit)
+            });
+          })
         })
-      });
-    }, 1000)
+      }
+    );
   })
   .post(function (req, res) {
-    var customer = Customer.build(_.pick(req.body, ['name', 'address', 'phone']));
-    customer.save().then(function (customer) {
-      res.json(customer);
-    });
+    timer(()=> {
+      var customer = Customer.build(_.pick(req.body, ['name', 'address', 'phone']));
+      customer.save().then(function (customer) {
+        res.json(customer);
+      });
+    })
   });
 
 app.route('/api/customers/:customer_id')
   .get(function (req, res) {
-    Customer.findById(req.params.customer_id).then(function (customer) {
-      res.json(customer);
-    });
+    timer(function() {
+      Customer.findById(req.params.customer_id).then(function (customer) {
+        res.json(customer);
+      });
+    })
   })
   .put(function (req, res) {
-    Customer.findById(req.params.customer_id).then(function (customer) {
-      customer.update(_.pick(req.body, ['name', 'address', 'phone'])).then(function (customer) {
-        res.json(customer);
+    timer(()=> {
+      Customer.findById(req.params.customer_id).then(function (customer) {
+        customer.update(_.pick(req.body, ['name', 'address', 'phone'])).then(function (customer) {
+          res.json(customer);
+        });
       });
-    });
+    })
   })
   .delete(function (req, res) {
-    Customer.findById(req.params.customer_id).then(function (customer) {
-      customer.destroy().then(function (customer) {
-        res.json(customer);
+    timer(()=> {
+      Customer.findById(req.params.customer_id).then(function (customer) {
+        customer.destroy().then(function (customer) {
+          res.json(customer);
+        });
       });
-    });
+    })
   });
 
 // PRODUCTS API

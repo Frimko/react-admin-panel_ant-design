@@ -4,20 +4,19 @@ const endpoint = 'http://localhost:8000/api/';
 
 let publicApi = axios.create({
   baseURL: endpoint,
+  timeout: 5000,
   crossDomain: true,
 });
-export const getAllItems = ({ type, page }) => {
+export const getAllItems = (type, page) => {
   return publicApi.get(`/${type}?page=${page}`);
 };
-export const getItem = ({ type, id }) => {
+export const getItem = (type, id) => {
   return publicApi.get(`/${type}/${id}`);
 };
-
 export const deleteItem = (type, id) => {
   return publicApi.delete(`/${type}/${id}`);
 };
-
-export const setCustomer = ({ name, address, phone }) => {
+export const addCustomer = ({ name, address, phone }) => {
   return publicApi.post('/customers', { name, address, phone });
 };
 export const updateCustomer = (id, { name, address, phone }) => {

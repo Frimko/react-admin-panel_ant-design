@@ -1,4 +1,3 @@
-import React from 'react';
 import styled, { css, keyframes } from 'react-emotion';
 import Styleds from 'src/configStyleds';
 
@@ -9,7 +8,7 @@ export const BodyLoader = styled('div')`
   width: 100%;
   height: 100%;
   position: ${props => props.fullScreen ? 'fixed' : 'absolute'};
-  z-index: 100000;
+  z-index: 100;
   display: flex;
   justify-content: center;
   align-items: center;

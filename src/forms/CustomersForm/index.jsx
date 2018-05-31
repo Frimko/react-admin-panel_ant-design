@@ -2,68 +2,104 @@ import React, { PureComponent } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { Form, Row, Col, Modal, Spin, Alert } from 'antd';
 import Button from 'components/Button';
 import TextField from 'components/reduxForm/TextField';
+import { getItem } from 'actions/customers';
 
-import { getOneItem } from 'actions/customers';
-import { Form, Row, Col, Modal } from 'antd';
-
+/* eslint react/prop-types: 0 */
 class CustomersForm extends PureComponent {
 
   componentDidMount() {
     const { fields, load, rowId } = this.props;
-    if (!fields.some(item => !!item.value)) {
+    if (this.isEditForm() && !fields.some(item => !!item.value)) {
       load(rowId);
     }
   }
 
+  isEditForm = () => (this.props.type === 'edit')
+
   getSubmitButton = () => {
-    const { handleSubmit, valid, dirty, pristine, submitting, showModal } = this.props;
+    const { handleSubmit, valid, dirty, pristine, submitting, showModal, loading } = this.props;
 
     return (
       <Button
         key='save'
+        keyForm='save'
         inModalFooter={showModal}
         buttonProps={{
           type: 'primary',
           onClick: handleSubmit,
-          disabled: ((submitting && !dirty && pristine) || !valid),
+          disabled: ((submitting && !dirty && pristine) || !valid || loading),
         }}
         formItemProps={{
           wrapperCol: { span: 18, offset: 5 },
         }}
-        loading={false}
-        text='Сохранить'
+        text={this.isEditForm ? 'Обновить' : 'Добавить'}
       />
     );
   }
 
   getForm = () => {
-    const { fields, showModal } = this.props;
+    const { fields, showModal, errorText, successText, loading } = this.props;
+    console.log('fields', fields);
     const items = fields.filter((item) => (item.name !== 'id'));
     return (
-      <Row>
-        <Col span={showModal ? 24 : 12}>
-          <Form>
+      <Spin spinning={loading}>
+        <Row>
+          <Col span={showModal ? 24 : 12}>
+            <Form>
+              {
+                items.map((item) => (
+                  <Field
+                    key={item.name}
+                    name={item.name}
+                    label={item.label}
+                    component={TextField}
+                    placeholder={item.label}
+                    type='text'
+                    labelCol={{ span: 5 }}
+                    wrapperCol={{ span: 18 }}
+                  />
+                ))
+              }
+              {!showModal && this.getSubmitButton()}
+            </Form>
             {
-              items.map((item) => (
-                <Field
-                  key={item.name}
-                  name={item.name}
-                  label={item.label}
-                  component={TextField}
-                  placeholder={item.label}
-                  type='text'
-                  labelCol={{ span: 5 }}
-                  wrapperCol={{ span: 18 }}
+              errorText && (
+                <Alert
+                  message="Ошибка"
+                  description={errorText}
+                  type="error"
+                  showIcon
                 />
-              ))
+              )
             }
-            {!showModal && this.getSubmitButton()}
-          </Form>
-        </Col>
-      </Row>
+            {
+              successText && (
+                <Alert
+                  description={successText}
+                  type="success"
+                  showIcon
+                />
+              )
+            }
+          </Col>
+        </Row>
+      </Spin>
+
     );
+  }
+
+  hideModal = () => {
+    const { loading, curPageTable, history } = this.props;
+    if (!loading) {
+      if (curPageTable > 1) {
+        history.push(`/customers/page${curPageTable + 1}/`);
+      } else {
+        history.push('/customers/');
+      }
+    }
   }
 
   render() {
@@ -72,9 +108,9 @@ class CustomersForm extends PureComponent {
       return (
         <Modal
           visible
-          title='Форма редактирования'
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          title={this.isEditForm() ? 'Форма редактирования' : 'Форма добавления'}
+          onOk={this.hideModal}
+          onCancel={this.hideModal}
           footer={[
             this.getSubmitButton(),
           ]}
@@ -98,43 +134,34 @@ const validate = values => {
 };
 
 const mapStateToProps = (state) => {
+  const { form } = state.customers;
+  const { table } = state.customers;
   return {
-    initialValues: state.customers.editedRow,
+    loading: form.loading,
+    errorText: form.errorText,
+    successText: form.successText,
+    curPageTable: table.curPage,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  const tableName = 'customers';
-  return {
-    load: (id) => dispatch(getOneItem(tableName, id)),
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { fields, type } = ownProps;
+  const objectProps = {
+    load: (id) => dispatch(getItem(id)),
   };
-};
-
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  console.log('stateProps, dispatchProps, ownProps', stateProps, dispatchProps, ownProps);
-  const { fields } = ownProps;
-  let object = {};
-  if (fields.some(item => !!item.value)) {
-    fields.forEach((item) => (object[item.name] = item.value));
-    return {
-      ...ownProps,
-      ...dispatchProps,
-      ...stateProps,
-      initialValues: object,
-    };
+  if (type === 'edit' && fields.some(item => !!item.value)) {
+    let initialValues = {};
+    fields.forEach((item) => (initialValues[item.name] = item.value));
+    objectProps.initialValues = initialValues;
   }
-  return {
-    ...ownProps,
-    ...dispatchProps,
-    ...stateProps,
-  };
+  return objectProps;
 };
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps, mergeProps),
+  connect(mapStateToProps, mapDispatchToProps),
   reduxForm({
-    form: 'customers',
     validate,
+    form: 'customers',
     keepDirtyOnReinitialize: true,
     enableReinitialize: true,
   })
