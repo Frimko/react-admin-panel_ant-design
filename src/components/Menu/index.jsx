@@ -1,9 +1,10 @@
 import React from 'react';
-import { Menu as AntMenu, Icon } from 'antd';
-import { Link, withRouter } from 'react-router-dom';
+import {Menu as AntMenu, Icon} from 'antd';
+import PropTypes from 'prop-types';
+import {Link, withRouter} from 'react-router-dom';
 
-const Menu = ({ location }) => {
-  //const selected = !!window && window.location ? window.location.pathname : 'customers';
+const Menu = ({location}) => {
+  // const selected = !!window && window.location ? window.location.pathname : 'customers';
 
   const menuItems = [
     {
@@ -19,7 +20,7 @@ const Menu = ({ location }) => {
   ];
   let defaultSelectedKeys = menuItems[0].link;
   menuItems.some((item) => {
-    var reg = new RegExp(`/${item.link}(.*)/`);
+    var reg = new RegExp(`^${item.link}(.*)`);
     if (reg.test(location.pathname)) {
       defaultSelectedKeys = item.link;
       return true;
@@ -41,5 +42,9 @@ const Menu = ({ location }) => {
     </AntMenu>
   );
 };
+Menu.propTypes = {
+  location: PropTypes.object.isRequired,
+};
 
 export default withRouter(Menu);
+

@@ -53,6 +53,7 @@ class Customers extends PureComponent {
       <Page title="Customer">
         {errorText && (<Alert message={errorText} type="error" showIcon closable/>)}
         <Table
+          showModal
           items={items}
           pageCount={pageCount}
           columns={this.columns}

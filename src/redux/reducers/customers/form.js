@@ -1,4 +1,5 @@
 import { createReducer } from 'redux-act';
+import { DESTROY } from 'redux-form/es/actionTypes';
 
 import {
   getItemSuccess,
@@ -52,7 +53,7 @@ export default createReducer({
   [getItemError]: error,
   [editItemError]: error,
   [addItemError]: error,
-  ['@@redux-form/DESTROY']: (state, payload, meta) => {
+  [DESTROY]: (state, payload, meta) => {
     if (meta.form.indexOf('customers') > -1) {
       return initialState;
     } else {

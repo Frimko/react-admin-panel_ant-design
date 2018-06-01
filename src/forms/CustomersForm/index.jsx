@@ -42,7 +42,6 @@ class CustomersForm extends PureComponent {
 
   getForm = () => {
     const { fields, showModal, errorText, successText, loading } = this.props;
-    console.log('fields', fields);
     const items = fields.filter((item) => (item.name !== 'id'));
     return (
       <Spin spinning={loading}>
