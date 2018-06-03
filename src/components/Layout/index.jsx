@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout as AntLayout, BackTop } from 'antd';
+import { Layout as AntLayout } from 'antd';
 import PropTypes from 'prop-types';
 import logoSvg from 'svg/logo.svg';
 import Header from 'components/Header';
@@ -37,7 +37,6 @@ class Layout extends Component {
           <Menu/>
         </AntLayout.Sider>
         <AntLayout style={{ height: '100vh', overflow: 'hidden' }} id="mainContainer">
-          <BackTop target={() => document.getElementById('mainContainer')}/>
           <Header trigger={trigger}/>
           {this.props.children}
         </AntLayout>

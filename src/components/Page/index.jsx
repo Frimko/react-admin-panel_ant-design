@@ -1,18 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
+import {Helmet} from 'react-helmet';
 import PageLoader from 'containers/PageLoader';
-import { PageBody, Content } from './styled';
+import {BackTop} from 'antd';
+
+import {PageBody, Content, WrapBody} from './styled';
 
 const Page = (props) => (
-  <PageBody>
-    <Helmet title={props.title}/>
-    <PageLoader/>
-    <Content>
-      <h1>{props.title}</h1>
-      {props.children}
-    </Content>
-  </PageBody>
+  <WrapBody>
+    <PageBody id="pageBody">
+      <Helmet title={props.title}/>
+      <PageLoader/>
+      <Content>
+        <BackTop target={() => document.getElementById('pageBody')}/>
+        <h1>{props.title}</h1>
+        {props.children}
+      </Content>
+    </PageBody>
+  </WrapBody>
 );
 
 Page.propTypes = {
