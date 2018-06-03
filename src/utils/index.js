@@ -4,6 +4,21 @@
  */
 import { normalize } from 'normalizr';
 
+
+/**
+ * Recursively flatten the data
+ * [{path:string},{path:string}] => {path,path2}
+ * @param  menu
+ */
+export const getFlatMenuKeys = menu =>
+  menu.reduce((keys, item) => {
+    keys.push(item.path);
+    if (item.children) {
+      return keys.concat(getFlatMenuKeys(item.children));
+    }
+    return keys;
+  }, []);
+
 /**
  *
  * @param data - array
