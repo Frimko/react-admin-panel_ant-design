@@ -7,12 +7,12 @@ import {BackTop} from 'antd';
 import {PageBody, Content, WrapBody} from './styled';
 
 const Page = (props) => (
-  <WrapBody>
-    <PageBody id="pageBody">
+  <WrapBody id="pageBody">
+    <PageBody>
       <Helmet title={props.title}/>
       <PageLoader/>
       <Content>
-        <BackTop target={() => document.getElementById('pageBody')}/>
+        { document && <BackTop target={() => document.getElementById('pageBody')}/>}
         <h1>{props.title}</h1>
         {props.children}
       </Content>
