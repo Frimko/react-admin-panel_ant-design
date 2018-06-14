@@ -1,8 +1,8 @@
 import React from 'react';
-import {Menu as AntMenu, Icon} from 'antd';
+import { Menu as AntMenu, Icon } from 'antd';
 import PropTypes from 'prop-types';
-import {Link, withRouter} from 'react-router-dom';
-import {getFlatMenuKeys} from 'utils';
+import { Link, withRouter } from 'react-router-dom';
+import { getFlatMenuKeys } from 'utils';
 import pathToRegexp from 'path-to-regexp';
 
 const getMenuMatchKeys = (flatMenuKeys, paths) => {
@@ -19,7 +19,7 @@ const urlToList = (url) => {
   });
 };
 
-const Menu = ({location}) => {
+const Menu = ({ location }) => {
   const menu = [
     {
       path: '/',
@@ -58,7 +58,7 @@ const Menu = ({location}) => {
       }
       return (
         <AntMenu.Item key={item.path}>
-          <Link to={item.path || '#'} style={siderFoldN ? {width: 10} : {}}>
+          <Link to={item.path || '#'} style={siderFoldN ? { width: 10 } : {}}>
             <span>{item.icon && <Icon type={item.icon}/>}<span>{item.name}</span></span>
           </Link>
         </AntMenu.Item>

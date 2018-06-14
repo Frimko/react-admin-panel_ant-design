@@ -1,5 +1,5 @@
 import styled from 'react-emotion';
-import {Layout} from 'antd';
+import { Layout } from 'antd';
 
 export const PageBody = styled(Layout.Content)`
       background: #fff; 

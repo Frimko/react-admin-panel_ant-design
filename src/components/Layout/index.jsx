@@ -16,7 +16,7 @@ class Layout extends Component {
     this.setState({
       collapsed: !this.state.collapsed,
     });
-  }
+  };
 
   render() {
     const trigger = (
